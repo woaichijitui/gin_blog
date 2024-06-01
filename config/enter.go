@@ -1,0 +1,8 @@
+package config
+
+// 这些结构体的字段 分别对应yaml不同层级的映射
+type Config struct {
+	Mysql  Mysql  `yaml:"mysql"`
+	Logger Logger `yaml:"logger"`
+	System System `yaml:"system"`
+}
