@@ -1,0 +1,5 @@
+package flag
+
+func Makemigrations() {
+
+}
