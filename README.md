@@ -64,7 +64,7 @@ var ApiGroupApp = new(ApiGroup)
 
 ```
 
-6.响应模型和预定义error
+#### 6.错误状态码
 
 ![image-20240604220412868](C:\Users\hil\AppData\Roaming\Typora\typora-user-images\image-20240604220412868.png)
 
@@ -134,6 +134,60 @@ const (
 
 var ErrorMap = map[ErrorCode]string{
 	SettingsError: "系统错误",
+}
+
+```
+
+### 二、表结构搭建
+
+![](C:\Users\hil\AppData\Roaming\Typora\typora-user-images\image-20240611131750808.png)
+
+#### 表结构说明
+
+```
+advert_model.go 	//广告表
+article_model.go	//文章表
+banner_model.go		//图片表
+comment_model.go	//评论表
+enter.go	
+fade_back_model.go	//用户反馈表
+login_data_model.go	//登录信息表
+menu_banner_model.go//菜单图片表
+menu_model.go		//菜单表
+message_model.go	//信息表
+tag_model.go		//标签表
+user_collect_model.go	//用户收藏文章表
+user_model.go		//用户表
+```
+
+### 三、配置API
+
+修改配置文件信息api
+
+```
+func (SettingsApi) SettingsInfoUpdateView(c *gin.Context) {
+	//绑定json参数
+	var siteInfo config.SiteInfo
+	err := c.ShouldBindJSON(&siteInfo)
+	if err != nil {
+		global.Log.Errorln(err)
+		//若是绑定失败 则返回失败信息
+		res.FailWithCode(res.ArgumentError, c)
+		return
+	}
+
+	//绑定成功
+	//	改变与yaml文件绑定结构体
+	global.Config.SiteInfo = siteInfo
+	//	更改配置文件
+	err = core.SetYaml()
+	if err != nil {
+		global.Log.Errorln(err)
+		res.FailWithMassage(err.Error(), c)
+	}
+	res.OkWithMassage("更新成功", c)
+	global.Log.Infoln("更改系统信息成功")
+
 }
 
 ```

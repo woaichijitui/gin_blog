@@ -1,5 +1,6 @@
 package models
 
+// AdvertModel 广告表
 type AdvertModel struct {
 	MODEL
 	Title  string `gorm:"size:32" json:"title" ` //显示的标题

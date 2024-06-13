@@ -53,6 +53,7 @@ func FailWithCode(code ErrorCode, c *gin.Context) {
 	// 若有该错误，则取其内容
 	if b {
 		Result(int(code), map[string]interface{}{}, msg, c)
+		return
 	}
 	//	若没有该错误
 	Result(ERROR, map[string]interface{}{}, "未知错误", c)

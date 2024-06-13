@@ -10,7 +10,7 @@ type MenuModel struct {
 	Slogan       string        `gorm:"size:64" json:"slogan" `                                                                     //广告
 	Abstract     ctype.Array   `gorm:"type:string" json:"abstract" `                                                               //简介
 	AbstractTime int           ` json:"abstract_time" `                                                                            //简介的切换时间
-	Banners      []BannerModel `gorm:"many2many:menu_Banner_models;joinForeignKey:MenuID;joinReferences:BannerID" json:"banners" ` //菜单图片列表
+	Banners      []BannerModel `gorm:"many2many:menu_banner_models;joinForeignKey:MenuID;joinReferences:BannerID" json:"banners" ` //菜单图片列表
 	BannerTime   int           `gorm:"" json:"banner_time" `                                                                       //菜单图片的切换时间
 	Sort         int           `gorm:"size:10" json:"sort" `                                                                       //菜单的循序
 }

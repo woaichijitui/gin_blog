@@ -6,7 +6,7 @@ type Option struct {
 	DB bool
 }
 
-// Parse 解析命令行参数、
+// Parse 解析命令行参数
 //
 //	是否初始化数据库
 func Parse() Option {
@@ -31,9 +31,10 @@ func IsWebStop(option Option) bool {
 }
 
 // SwitchOption 根据命令执行不同的函数
-func SwitchOption(option Option) {
+func SwitchOption(option Option) bool {
 	if option.DB {
 		Makemigrations()
+		return true
 	}
-
+	return false
 }
