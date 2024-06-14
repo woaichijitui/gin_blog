@@ -29,7 +29,7 @@ func Ok(data any, msg string, c *gin.Context) {
 }
 
 func OkWithData(data interface{}, c *gin.Context) {
-	Result(SUCCESS, data, "查询成功", c)
+	Result(SUCCESS, data, "成功", c)
 }
 
 func OkWithMassage(msg string, c *gin.Context) {
@@ -38,6 +38,9 @@ func OkWithMassage(msg string, c *gin.Context) {
 
 func OkWithDetailed(data interface{}, msg string, c *gin.Context) {
 	Result(SUCCESS, data, msg, c)
+}
+func OkWith(c *gin.Context) {
+	Result(SUCCESS, map[string]interface{}{}, "成功", c)
 }
 func Fail(data any, msg string, c *gin.Context) {
 	Result(ERROR, data, msg, c)

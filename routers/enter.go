@@ -13,5 +13,6 @@ func InitRouter() *gin.Engine {
 	apiGroup := router.Group("/api")
 	//系统设置路由
 	SettingRouter(apiGroup)
+	ImagesRouter(apiGroup)
 	return router
 }

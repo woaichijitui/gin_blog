@@ -162,9 +162,21 @@ user_model.go		//用户表
 
 ### 三、配置API
 
+主要配置有：
+
+site_info
+
+qq
+
+email
+
+七牛
+
+jwt
+
 修改配置文件信息api
 
-```
+```go
 func (SettingsApi) SettingsInfoUpdateView(c *gin.Context) {
 	//绑定json参数
 	var siteInfo config.SiteInfo
@@ -192,3 +204,4 @@ func (SettingsApi) SettingsInfoUpdateView(c *gin.Context) {
 
 ```
 
+将多个配置浓缩为一个配置？
