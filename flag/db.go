@@ -9,11 +9,11 @@ func Makemigrations() {
 	var err error
 	// 创建第三张连接表，many2many
 	//	参数1：参数2：带外键的字段	参数3：连接表
-	global.Mysql.SetupJoinTable(&models.UserModel{}, "CollectsModels", &models.UserCollectModel{})
-	global.Mysql.SetupJoinTable(&models.MenuModel{}, "user2_collects", &models.MenuBannerModel{})
+	global.DB.SetupJoinTable(&models.UserModel{}, "CollectsModels", &models.UserCollectModel{})
+	global.DB.SetupJoinTable(&models.MenuModel{}, "user2_collects", &models.MenuBannerModel{})
 
 	//	生成四张表的表结构
-	err = global.Mysql.Set("gorm:table_options", "ENGINE=InnoDB").
+	err = global.DB.Set("gorm:table_options", "ENGINE=InnoDB").
 		AutoMigrate(
 			&models.UserModel{},
 			&models.TagModel{},

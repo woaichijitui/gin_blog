@@ -205,3 +205,152 @@ func (SettingsApi) SettingsInfoUpdateView(c *gin.Context) {
 ```
 
 将多个配置浓缩为一个配置？
+
+
+
+### 四、图片管理API
+
+#### 1、图片上传view
+
+```go
+func (ImagesApi) ImagesUploadView(c *gin.Context) {
+	//	接收多个文件（图片）
+	form, err := c.MultipartForm()
+    files, ok := form.File["images"]
+	//	将文件列表逐一判断并上传
+    for _, file := range files {
+        // ...
+    }
+    //	最后响应包含所有图片是否上传成功及其原因的res
+    res.OkWithData(fileResList, c)
+}
+```
+
+```go
+type FileUploadResponse struct {
+	FileName  string `json:"file_name" `
+	IsSuccess bool   `json:"is_success"`
+	Msg       string `json:"msg"`
+}
+```
+
+```
+//	FileUploadResponse 列表
+var fileResList []FileUploadResponse
+```
+
+下载图片路径
+
+```
+basePath := global.Config.Upload.Path
+	_, err = os.ReadDir(basePath)
+	if err != nil {
+
+		//不存在报错，就创建
+		err = os.MkdirAll(basePath, fs.ModePerm) //Mkdir 方法不能直接创建多级目录
+		if err != nil {
+			res.FailWithMassage(err.Error(), c)
+			return
+		}
+	}
+```
+
+
+
+#### 2、图片上传白名单
+
+```
+//图片文件白名单
+		//判断是否为图片格式后缀的文件
+		filenameSplitList := strings.Split(file.Filename, ".")
+		suffix := filenameSplitList[len(filenameSplitList)-1]
+		exit := utils.InList(imagesSuffixList, suffix)
+		if !exit {
+			fileResList = append(fileResList, FileUploadResponse{
+				FileName:  file.Filename,
+				IsSuccess: false,
+				Msg:       "文件非法",
+			})
+			continue
+		}
+```
+
+### 3、图片存入数据库
+
+`global.Mysql.Take(&models.BannerModel{}, "hash = ?", hash).RowsAffected`
+
+```
+//  存入数据库
+global.Mysql.Create(&models.BannerModel{
+    Path: path,
+    Hash: hash,
+    Name: file.Filename,
+})
+```
+
+### 4、获取图片list
+
+```
+// 图片列表查询接口
+func (ImagesApi) ImagesListView(c *gin.Context) {
+	var imagesList []models.BannerModel
+	var page models.PageInfo
+	//绑定参数
+	err := c.ShouldBindQuery(&page)
+	if err != nil {
+		res.FailWithCode(res.ArgumentError, c)
+		return
+	}
+
+	imagesList, count, _ := common.ComList(models.BannerModel{}, common.Option{
+		PageInfo: page,
+		Logger:   true,
+	})
+
+	//	成功响应
+	res.OkWithList(imagesList, count, c)
+
+}
+```
+
+list的通用响应
+
+```
+// OkWithList 响应分页操作
+func OkWithList[T any](list T, count int64, c *gin.Context) {
+	OkWithData(gin.H{"list": list, "count": count}, c)
+}
+```
+
+通用的分页查询
+
+```
+type Option struct {
+	models.PageInfo
+	Logger bool
+}
+
+func ComList[T any](model T, option Option) (modelList []T, count int64, err error) {
+
+	DB := global.DB
+	//是否开启mysql日志
+	if option.Logger {
+
+		DB = DB.Session(&gorm.Session{Logger: logger.Default.LogMode(logger.Info)})
+	}
+
+	// 统计数量
+	count = DB.Select("id").Find(&modelList).RowsAffected
+	// offset
+	offset := (option.Page - 1) * option.Limit
+	//	若小于0，则说明输出页数是错误的（小于等于0） 或者就是没有输入该数据
+	if offset < 0 {
+		offset = 0
+	}
+
+	//	分页查找数据
+	err = DB.Limit(option.Limit).Offset(offset).Find(&modelList).Error
+	return modelList, count, err
+}
+```
+

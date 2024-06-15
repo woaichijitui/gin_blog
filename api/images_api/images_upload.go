@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"gvb_server/global"
+	"gvb_server/models"
 	"gvb_server/models/res"
 	"gvb_server/utils"
 	"io/fs"
+	"io/ioutil"
 	"os"
 	"path"
 	"strings"
@@ -102,8 +104,35 @@ func (ImagesApi) ImagesUploadView(c *gin.Context) {
 			continue
 		}
 
+		//图片入库
+		fileObj, err := file.Open()
+		if err != nil {
+			//记录发生错误,但不返回数据,也不跳过,因为前面可以确认该图片是正确的
+			global.Log.Error(err)
+		}
+		data, err := ioutil.ReadAll(fileObj)
+		if err != nil {
+			//记录发生错误,但不返回数据,也不跳过,因为前面可以确认该图片是正确的
+			global.Log.Error(err)
+		}
+		// 计算图片的hash值
+		hash := utils.Md5(data)
+		//	查询数据是否有重复的图片
+		row := global.DB.Take(&models.BannerModel{}, "hash = ?", hash).RowsAffected
+		if row != 0 {
+			//	找到了
+			fileResList = append(fileResList, FileUploadResponse{
+				FileName:  file.Filename,
+				IsSuccess: false,
+				Msg:       "图片已存在",
+			})
+			continue
+		}
+
+		path := path.Join(basePath, file.Filename)
 		//上传图片
-		err = c.SaveUploadedFile(file, path.Join(basePath, file.Filename))
+		//	相同照片不会重复下载（不同名字 内容相同）
+		err = c.SaveUploadedFile(file, path)
 		if err != nil {
 			global.Log.Error(err)
 			fileResList = append(fileResList, FileUploadResponse{
@@ -113,10 +142,16 @@ func (ImagesApi) ImagesUploadView(c *gin.Context) {
 			})
 			continue
 		}
+		//	存入数据库
+		global.DB.Create(&models.BannerModel{
+			Path: path,
+			Hash: hash,
+			Name: file.Filename,
+		})
 
 		//	上传成功
 		fileResList = append(fileResList, FileUploadResponse{
-			FileName:  file.Filename,
+			FileName:  path,
 			IsSuccess: true,
 			Msg:       "上传成功",
 		})

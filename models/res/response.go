@@ -42,6 +42,12 @@ func OkWithDetailed(data interface{}, msg string, c *gin.Context) {
 func OkWith(c *gin.Context) {
 	Result(SUCCESS, map[string]interface{}{}, "成功", c)
 }
+
+// OkWithList 响应分页操作
+func OkWithList[T any](list T, count int64, c *gin.Context) {
+	OkWithData(gin.H{"list": list, "count": count}, c)
+}
+
 func Fail(data any, msg string, c *gin.Context) {
 	Result(ERROR, data, msg, c)
 }

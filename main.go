@@ -17,7 +17,7 @@ func main() {
 	global.Log.Printf("初始化log成功，日志等级为：%s", global.Config.Logger.Lever)
 
 	//	初始化mysql
-	global.Mysql = core.InitGorm()
+	global.DB = core.InitGorm()
 	global.Log.Infof(fmt.Sprintf("[%s] mysql连接成功！", global.Config.Mysql.DNS()))
 
 	//	命令行参数绑定
