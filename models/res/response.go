@@ -56,6 +56,8 @@ func Fail(data any, msg string, c *gin.Context) {
 func FailWithMassage(msg string, c *gin.Context) {
 	Result(ERROR, map[string]interface{}{}, msg, c)
 }
+
+// 用于绑定请求参数错误的响应
 func FailWithError(err error, obj any, c *gin.Context) {
 	msg := common.GetValidMsg(err, obj)
 	FailWithMassage(msg, c)

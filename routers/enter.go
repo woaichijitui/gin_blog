@@ -14,5 +14,6 @@ func InitRouter() *gin.Engine {
 	//系统设置路由
 	SettingRouter(apiGroup)
 	ImagesRouter(apiGroup)
+	AdvertRouter(apiGroup)
 	return router
 }
