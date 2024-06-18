@@ -2,20 +2,28 @@ package advert_api
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/go-playground/validator/v10"
 	"gvb_server/global"
 	"gvb_server/models"
 	"gvb_server/models/res"
+	"gvb_server/utils/common"
 )
 
 type AdvertResponse struct {
-	Title  string `json:"title" binding:"required" msg:"标题错误"`        //显示的标题
-	Href   string `json:"href" binding:"required,url" msg:"跳转连接非法"`   //跳转连接
-	Images string `json:"images" binding:"required,url" msg:"广告图片非法"` //图片
-	IsShow bool   `json:"is_show" binding:"required" msg:"请选择是否展示"`   //是否展示
+	Title  string `json:"title" binding:"required" msg:"标题错误"`          //显示的标题
+	Href   string `json:"href" binding:"required,url" msg:"跳转连接非法"`     //跳转连接
+	Images string `json:"images" binding:"required,url" msg:"广告图片非法"`   //图片
+	IsShow bool   `json:"is_show" binding:"requiredbool" msg:"请选择是否展示"` //是否展示
 }
 
 // 创建广告
 func (AdvertApi) AdvertCreateView(c *gin.Context) {
+
+	// 注册自定义验证器
+	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+		v.RegisterValidation("requiredbool", common.RequiredBool)
+	}
 
 	var cr AdvertResponse
 	//		绑定参数

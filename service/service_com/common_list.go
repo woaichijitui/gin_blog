@@ -21,9 +21,13 @@ func ComList[T any](model T, option Option) (modelList []T, count int64, err err
 		DB = DB.Session(&gorm.Session{Logger: logger.Default.LogMode(logger.Info)})
 	}
 
-	// 统计数量
-	count = DB.Select("id").Find(&modelList).RowsAffected
+	query := DB.Where(&model)
 
+	// 统计数量
+	count = query.Select("id").Find(&modelList).RowsAffected
+
+	//受前面影响 需要手动重新赋值
+	query = DB.Where(&model)
 	// 排序
 	if option.Sort == "" {
 		option.Sort = "created_at desc" //默认按照时间从后往前排
@@ -36,6 +40,6 @@ func ComList[T any](model T, option Option) (modelList []T, count int64, err err
 	}
 
 	//	分页查找数据
-	err = DB.Limit(option.Limit).Offset(offset).Order(option.Sort).Find(&modelList).Error
+	err = query.Limit(option.Limit).Offset(offset).Order(option.Sort).Find(&modelList).Error
 	return modelList, count, err
 }

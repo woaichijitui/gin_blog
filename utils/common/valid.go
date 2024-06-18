@@ -73,3 +73,12 @@ func GetValidMsg(err error, obj any) string {
 
 	return err.Error()
 }
+
+// 自定义验证器函数
+func RequiredBool(fl validator.FieldLevel) bool {
+	field := fl.Field()
+	if field.Kind() == reflect.Bool {
+		return true
+	}
+	return false
+}

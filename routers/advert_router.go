@@ -8,5 +8,6 @@ import (
 func AdvertRouter(router *gin.RouterGroup) {
 	advertApi := api.ApiGroupApp.AdvertApi
 	router.POST("/advert", advertApi.AdvertCreateView)
+	router.GET("/advert", advertApi.AdvertListView)
 
 }
