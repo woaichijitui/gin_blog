@@ -10,7 +10,7 @@ type Option struct {
 //
 //	是否初始化数据库
 func Parse() Option {
-	db := sys_flag.Bool("db", false, "初始化数据库")
+	db := sys_flag.Bool("db", false, "初始化数据库") //命令行参数若没加任何参数 则为true
 
 	sys_flag.Parse()
 

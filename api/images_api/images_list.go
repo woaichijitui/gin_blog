@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"gvb_server/models"
 	"gvb_server/models/res"
-	"gvb_server/service/common"
+	"gvb_server/service/service_com"
 )
 
 // 图片列表查询接口
@@ -19,7 +19,7 @@ func (ImagesApi) ImagesListView(c *gin.Context) {
 	}
 
 	// 查询分页数据
-	imagesList, count, _ := common.ComList(models.BannerModel{}, common.Option{
+	imagesList, count, _ := service_com.ComList(models.BannerModel{}, service_com.Option{
 		PageInfo: page,
 		Logger:   true,
 	})

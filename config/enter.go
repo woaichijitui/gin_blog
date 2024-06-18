@@ -10,5 +10,5 @@ type Config struct {
 	QQ       QQ       `yaml:"qq"`
 	Email    Email    `yaml:"email"`
 	jwt      Jwt      `yaml:"jwt"`
-	QiNiu    QiNiu    `yaml:"qi_niu"`
+	Aliyun   Aliyun   `yaml:"aliyun"`
 }

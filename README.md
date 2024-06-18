@@ -275,7 +275,7 @@ basePath := global.Config.Upload.Path
 		}
 ```
 
-### 3、图片存入数据库
+#### 3、图片存入数据库
 
 `global.Mysql.Take(&models.BannerModel{}, "hash = ?", hash).RowsAffected`
 
@@ -288,7 +288,7 @@ global.Mysql.Create(&models.BannerModel{
 })
 ```
 
-### 4、获取图片list
+#### 4、获取图片list
 
 ```
 // 图片列表查询接口
@@ -353,4 +353,29 @@ func ComList[T any](model T, option Option) (modelList []T, count int64, err err
 	return modelList, count, err
 }
 ```
+
+
+
+#### 5、图片删除操作
+
+删除使用了Hook函数
+
+```go
+// BeforeDelete 钩子函数将在删除记录前被调用
+func (b *BannerModel) BeforeDelete(tx *gorm.DB) (err error) {
+
+	if b.ImageType == ctype.Local { //是本地文件
+		//	本地图片，删除，还要删除本地的存储。本地文件和mysql中的banner表是一一对应的，无重复图片和本地图片
+		err = os.Remove(b.Path)
+		if err != nil {
+			global.Log.Error(err)
+			return err
+		}
+	}
+
+	return nil
+}
+```
+
+
 

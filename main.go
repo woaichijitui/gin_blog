@@ -6,6 +6,7 @@ import (
 	"gvb_server/flag"
 	"gvb_server/global"
 	"gvb_server/routers"
+	"gvb_server/service/service_com"
 )
 
 func main() {
@@ -31,6 +32,9 @@ func main() {
 	//	启动gin
 	addr := global.Config.System.Addr()
 	router := routers.InitRouter()
+
+	//连接aliyun
+	service_com.AliyunInit()
 
 	//	终端显示运行地址
 	global.Log.Infof("gvb 运行在%s", addr)

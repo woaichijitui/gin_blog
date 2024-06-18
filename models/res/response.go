@@ -2,6 +2,7 @@ package res
 
 import (
 	"github.com/gin-gonic/gin"
+	"gvb_server/utils/common"
 	"net/http"
 )
 
@@ -54,6 +55,10 @@ func Fail(data any, msg string, c *gin.Context) {
 
 func FailWithMassage(msg string, c *gin.Context) {
 	Result(ERROR, map[string]interface{}{}, msg, c)
+}
+func FailWithError(err error, obj any, c *gin.Context) {
+	msg := common.GetValidMsg(err, obj)
+	FailWithMassage(msg, c)
 }
 
 // 根据code 查询出msg

@@ -1,4 +1,4 @@
-package common
+package service_com
 
 import (
 	"gorm.io/gorm"
@@ -23,6 +23,11 @@ func ComList[T any](model T, option Option) (modelList []T, count int64, err err
 
 	// 统计数量
 	count = DB.Select("id").Find(&modelList).RowsAffected
+
+	// 排序
+	if option.Sort == "" {
+		option.Sort = "created_at desc" //默认按照时间从后往前排
+	}
 	// offset
 	offset := (option.Page - 1) * option.Limit
 	//	若小于0，则说明输出页数是错误的（小于等于0） 或者就是没有输入该数据
@@ -31,6 +36,6 @@ func ComList[T any](model T, option Option) (modelList []T, count int64, err err
 	}
 
 	//	分页查找数据
-	err = DB.Limit(option.Limit).Offset(offset).Find(&modelList).Error
+	err = DB.Limit(option.Limit).Offset(offset).Order(option.Sort).Find(&modelList).Error
 	return modelList, count, err
 }
