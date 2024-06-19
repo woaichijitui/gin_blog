@@ -377,5 +377,5 @@ func (b *BannerModel) BeforeDelete(tx *gorm.DB) (err error) {
 }
 ```
 
-
+### 五、广告管理API
 

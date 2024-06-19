@@ -3,12 +3,20 @@ package main
 import (
 	"fmt"
 	"gvb_server/core"
+	_ "gvb_server/docs" //需要导入文档包 不然报错
+	//_ 表示执行init函数时调用改包
 	"gvb_server/flag"
 	"gvb_server/global"
 	"gvb_server/routers"
 	"gvb_server/service/service_com"
 )
 
+// 添加注释以描述 server 信息 ，用于创建swagger文档
+// @title           gin_blog API
+// @version         1.0
+// @description     gin_vue_blog 程序api
+// @host      192.168.43.208:8080
+// @BasePath  /api
 func main() {
 	//	读取配置文件
 	core.InitConfig()

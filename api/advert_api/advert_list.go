@@ -9,7 +9,14 @@ import (
 	"strings"
 )
 
-// 广告list
+// AdvertListView 广告list
+// @Tags 广告管理
+// @summary 广告列表
+// @Description 广告列表
+// @Param page query models.PageInfo true "表示单个参数"
+// @Router /advert [get]
+// @Produce json
+// @success 200 {object} res.Response{data=[]models.AdvertModel}
 func (AdvertApi) AdvertListView(c *gin.Context) {
 	//	绑定参数
 	var AdvertList []models.AdvertModel

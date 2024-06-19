@@ -7,7 +7,8 @@ import (
 	"gvb_server/service/service_com"
 )
 
-// 图片列表查询接口
+// ImagesListView 图片列表查询接口
+
 func (ImagesApi) ImagesListView(c *gin.Context) {
 	var imagesList []models.BannerModel
 	var page models.PageInfo

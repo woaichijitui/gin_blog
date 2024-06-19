@@ -8,17 +8,13 @@ import (
 )
 
 // UpdateNameResponse
-// @Description: 修改图片名称的请求结构体
+// Description: 修改图片名称的请求结构体
 type UpdateNameResponse struct {
 	Id   uint   `json:"id" binding:"required" msg:"请选择文件的id"`
 	Name string `json:"name" binding:"required,max=256" msg:"请输入文件名，或名字太长"`
 }
 
-// ImagesUpdateView
-//
-//	@Description: 修改图片名字api （只修改数据库的名称）
-//	@receiver ImagesApi
-//	@param c
+// ImagesUpdateView 修改图片名字api （只修改数据库的名称）
 func (ImagesApi) ImagesUpdateView(c *gin.Context) {
 	var cr UpdateNameResponse
 	//		绑定参数

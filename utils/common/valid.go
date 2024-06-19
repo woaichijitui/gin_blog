@@ -16,10 +16,10 @@ type intType interface {
 
 // CheckFileSizeOutOfLimit
 //
-//	@Description: 校验文件大小是否超出配置限制大小
-//	@param fileSize 单位b
-//	@param LimitSize 单位MB
-//	@return error
+//	Description: 校验文件大小是否超出配置限制大小
+//	param fileSize 单位b
+//	param LimitSize 单位MB
+//	return error
 func CheckFileSizeOutOfLimit[T intType](fileSize int64, limitSize T) error {
 	sizeMB := float64(fileSize) / (float64(1024 * 1024)) //将字节转换为MB
 	//将泛型全部转换成float64
@@ -32,10 +32,10 @@ func CheckFileSizeOutOfLimit[T intType](fileSize int64, limitSize T) error {
 
 // CheckFileSuffixIsRight
 //
-//	@Description: 校验文件后缀是否符合配置
-//	@param fileName
-//	@return suffix
-//	@return err
+//	Description: 校验文件后缀是否符合配置
+//	param fileName
+//	return suffix
+//	return err
 func CheckFileSuffixIsRight(fileName string) (suffix string, err error) {
 	filenameSplitList := strings.Split(fileName, ".")
 	suffix = filenameSplitList[len(filenameSplitList)-1]
@@ -48,10 +48,10 @@ func CheckFileSuffixIsRight(fileName string) (suffix string, err error) {
 
 // GetValidMsg
 //
-//	@Description: 获取结构体中msg标签信息
-//	@param err
-//	@param obj
-//	@return string
+//	Description: 获取结构体中msg标签信息
+//	param err
+//	param obj
+//	return string
 func GetValidMsg(err error, obj any) string {
 
 	typeObj := reflect.TypeOf(obj)

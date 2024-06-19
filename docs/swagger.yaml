@@ -1,0 +1,135 @@
+basePath: /api
+definitions:
+  advert_api.AdvertResponse:
+    properties:
+      href:
+        description: 跳转连接
+        type: string
+      images:
+        description: 图片
+        type: string
+      is_show:
+        description: 是否展示
+        type: boolean
+      title:
+        description: 显示的标题
+        type: string
+    required:
+    - href
+    - images
+    - title
+    type: object
+  models.AdvertModel:
+    properties:
+      created_at:
+        description: 创建时间
+        type: string
+      href:
+        description: 跳转连接
+        type: string
+      id:
+        description: 主键id
+        type: integer
+      images:
+        description: 图片
+        type: string
+      is_show:
+        description: 是否展示
+        type: boolean
+      title:
+        description: 显示的标题
+        type: string
+    type: object
+  res.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      msg:
+        type: string
+    type: object
+host: 192.168.43.208:8080
+info:
+  contact: {}
+  description: gin_vue_blog 程序api
+  title: gin_blog API
+  version: "1.0"
+paths:
+  /advert:
+    get:
+      description: 广告列表
+      parameters:
+      - in: query
+        name: key
+        type: string
+      - description: 每页的页数
+        in: query
+        name: limit
+        type: integer
+      - in: query
+        name: page
+        type: integer
+      - in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/res.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.AdvertModel'
+                  type: array
+              type: object
+      summary: 广告列表
+      tags:
+      - 广告管理
+    post:
+      description: 创建广告
+      parameters:
+      - description: 表示多个参数
+        in: body
+        name: cr
+        required: true
+        schema:
+          $ref: '#/definitions/advert_api.AdvertResponse'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/res.Response'
+      summary: 创建广告
+      tags:
+      - 广告管理
+  /advert/{id}:
+    put:
+      description: 更新广告
+      parameters:
+      - description: URL 参数 ：id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 创建广告的示例
+        in: body
+        name: cr
+        schema:
+          $ref: '#/definitions/advert_api.AdvertResponse'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/res.Response'
+      summary: 更新广告
+      tags:
+      - 广告管理
+swagger: "2.0"
