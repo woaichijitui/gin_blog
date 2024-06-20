@@ -379,3 +379,13 @@ func (b *BannerModel) BeforeDelete(tx *gorm.DB) (err error) {
 
 ### 五、广告管理API
 
+
+
+### 六、菜单管理API
+
+#### 自动重启插件
+
+[air go 官方文档](https://github.com/air-verse/air/blob/master/README-zh_cn.md)
+
+`go install github.com/cosmtrek/air@latest`
+

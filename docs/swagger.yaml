@@ -19,6 +19,101 @@ definitions:
     - images
     - title
     type: object
+  images_api.BannerResponse:
+    properties:
+      id:
+        description: 图片id
+        type: integer
+      name:
+        description: 图片名称
+        type: string
+      path:
+        description: 图片路径
+        type: string
+    type: object
+  menu_api.ImageSort:
+    properties:
+      image_id:
+        description: 图片id
+        type: integer
+      sort:
+        description: 图片排序，例如2 其他图片可以是1 3
+        type: integer
+    type: object
+  menu_api.MenuImage:
+    properties:
+      id:
+        type: integer
+      path:
+        type: string
+    type: object
+  menu_api.MenuRequest:
+    properties:
+      abstract:
+        description: 简介
+        items:
+          type: string
+        type: array
+      abstract_time:
+        description: 简介的切换时间
+        type: integer
+      banner_time:
+        description: 菜单图片的切换时间
+        type: integer
+      image_sort_list:
+        description: 具体图片的循序
+        items:
+          $ref: '#/definitions/menu_api.ImageSort'
+        type: array
+      menu_title:
+        description: 菜单标题
+        type: string
+      menu_title_en:
+        description: 英文菜单标题
+        type: string
+      slogan:
+        description: 广告
+        type: string
+      sort:
+        description: 菜单列表排序
+        type: integer
+    type: object
+  menu_api.MenuResponse:
+    properties:
+      abstract:
+        description: 简介
+        items:
+          type: string
+        type: array
+      abstract_time:
+        description: 简介的切换时间
+        type: integer
+      banner_time:
+        description: 菜单图片的切换时间
+        type: integer
+      created_at:
+        description: 创建时间
+        type: string
+      id:
+        description: 主键id
+        type: integer
+      menu_title:
+        description: 菜单标题
+        type: string
+      menu_title_en:
+        description: 英文菜单标题
+        type: string
+      menuImages:
+        items:
+          $ref: '#/definitions/menu_api.MenuImage'
+        type: array
+      slogan:
+        description: 广告
+        type: string
+      sort:
+        description: 菜单的循序
+        type: integer
+    type: object
   models.AdvertModel:
     properties:
       created_at:
@@ -48,7 +143,7 @@ definitions:
       msg:
         type: string
     type: object
-host: 192.168.43.208:8080
+host: 127.0.0.1:8080
 info:
   contact: {}
   description: gin_vue_blog 程序api
@@ -132,4 +227,63 @@ paths:
       summary: 更新广告
       tags:
       - 广告管理
+  /image_names:
+    get:
+      description: 图片名字列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/res.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/images_api.BannerResponse'
+                  type: array
+              type: object
+      summary: 图片名字列表
+      tags:
+      - 图片管理
+  /menu:
+    get:
+      description: 菜单列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/res.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/menu_api.MenuResponse'
+                  type: array
+              type: object
+      summary: 菜单列表
+      tags:
+      - 菜单管理
+    post:
+      description: 菜单创建
+      parameters:
+      - description: 菜单表的参数和关联图片表参数
+        in: body
+        name: cr
+        required: true
+        schema:
+          $ref: '#/definitions/menu_api.MenuRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/res.Response'
+      summary: 菜单创建
+      tags:
+      - 菜单管理
 swagger: "2.0"

@@ -15,7 +15,7 @@ import (
 // @title           gin_blog API
 // @version         1.0
 // @description     gin_vue_blog 程序api
-// @host      192.168.43.208:8080
+// @host      127.0.0.1:8080
 // @BasePath  /api
 func main() {
 	//	读取配置文件
