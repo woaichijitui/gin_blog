@@ -8,7 +8,13 @@ import (
 )
 
 // ImagesListView 图片列表查询接口
-
+// @Tags 图片管理
+// @summary 图片列表
+// @Description 图片列表
+// @Param page query models.PageInfo true "图片参数"
+// @Router /images [get]
+// @Produce json
+// @success 200 {object} res.Response{data=[]models.BannerModel}
 func (ImagesApi) ImagesListView(c *gin.Context) {
 	var imagesList []models.BannerModel
 	var page models.PageInfo

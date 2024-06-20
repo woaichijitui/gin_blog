@@ -59,7 +59,6 @@ func (b *BannerModel) BeforeDelete(tx *gorm.DB) (err error) {
 		path := parsedURL.Path
 		// 获取路径并去除开头的斜杠
 		path = strings.TrimPrefix(parsedURL.Path, "/")
-		fmt.Println(path)
 
 		//	删除阿里云图片
 		err = global.Bucket.DeleteObject(path)

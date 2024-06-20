@@ -21,6 +21,13 @@ type FileUploadResponse struct {
 }
 
 // ImagesUploadView 多个文件下载接口
+// @Tags 图片管理
+// @summary 创建图片
+// @Description 创建图片
+// @Param images formData file false "上传的文件"
+// @Router /images [post]
+// @Produce json
+// @success 200 {object} res.Response{data=[]res.FileUploadResponse}
 func (ImagesApi) ImagesUploadView(c *gin.Context) {
 	//	接收多个文件（图片）
 	form, err := c.MultipartForm()

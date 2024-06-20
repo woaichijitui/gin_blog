@@ -9,6 +9,13 @@ import (
 )
 
 // ImagesRemoveView 批量删除图片接口
+// @Tags 图片管理
+// @summary 删除图片
+// @Description 删除图片
+// @Param cr body models.RemoveRequest true "要删除的图片id列表"
+// @Router /images [delete]
+// @Produce json
+// @success 200 {object} res.Response
 func (ImagesApi) ImagesRemoveView(c *gin.Context) {
 	var cr models.RemoveRequest
 	//	绑定参数
@@ -26,6 +33,8 @@ func (ImagesApi) ImagesRemoveView(c *gin.Context) {
 		return
 	}
 
+	//删除关联记录
+	global.DB.Delete(&models.MenuBannerModel{}, "banner_id in ?", cr.IDList)
 	//数据库删除
 	global.DB.Delete(imageList)
 

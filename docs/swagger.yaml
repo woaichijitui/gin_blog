@@ -19,6 +19,17 @@ definitions:
     - images
     - title
     type: object
+  ctype.ImageType:
+    enum:
+    - 1
+    - 2
+    type: integer
+    x-enum-comments:
+      Aliyun: 阿里云
+      Local: 本地
+    x-enum-varnames:
+    - Local
+    - Aliyun
   images_api.BannerResponse:
     properties:
       id:
@@ -30,6 +41,17 @@ definitions:
       path:
         description: 图片路径
         type: string
+    type: object
+  images_api.UpdateNameResponse:
+    properties:
+      id:
+        type: integer
+      name:
+        maxLength: 256
+        type: string
+    required:
+    - id
+    - name
     type: object
   menu_api.ImageSort:
     properties:
@@ -133,6 +155,46 @@ definitions:
         type: boolean
       title:
         description: 显示的标题
+        type: string
+    type: object
+  models.BannerModel:
+    properties:
+      created_at:
+        description: 创建时间
+        type: string
+      hash:
+        description: 图片的hash值，用于判断重复的图片
+        type: string
+      id:
+        description: 主键id
+        type: integer
+      image_type:
+        allOf:
+        - $ref: '#/definitions/ctype.ImageType'
+        description: 图片的类型，本地还是阿里云
+      name:
+        description: 图片名称
+        type: string
+      path:
+        description: 图片路径
+        type: string
+    type: object
+  models.RemoveRequest:
+    properties:
+      id_list:
+        items:
+          type: integer
+        type: array
+    type: object
+  res.FileUploadResponse:
+    properties:
+      file_name:
+        type: string
+      is_success:
+        type: boolean
+      msg:
+        type: string
+      url:
         type: string
     type: object
   res.Response:
@@ -245,6 +307,103 @@ paths:
                   type: array
               type: object
       summary: 图片名字列表
+      tags:
+      - 图片管理
+  /images:
+    delete:
+      description: 删除图片
+      parameters:
+      - description: 要删除的图片id列表
+        in: body
+        name: cr
+        required: true
+        schema:
+          $ref: '#/definitions/models.RemoveRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/res.Response'
+      summary: 删除图片
+      tags:
+      - 图片管理
+    get:
+      description: 图片列表
+      parameters:
+      - in: query
+        name: key
+        type: string
+      - description: 每页的页数
+        in: query
+        name: limit
+        type: integer
+      - in: query
+        name: page
+        type: integer
+      - in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/res.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.BannerModel'
+                  type: array
+              type: object
+      summary: 图片列表
+      tags:
+      - 图片管理
+    post:
+      description: 创建图片
+      parameters:
+      - description: 上传的文件
+        in: formData
+        name: images
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/res.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/res.FileUploadResponse'
+                  type: array
+              type: object
+      summary: 创建图片
+      tags:
+      - 图片管理
+  /images/{id}:
+    put:
+      description: 修改图片
+      parameters:
+      - description: 要更新的图片id和name
+        in: body
+        name: cr
+        required: true
+        schema:
+          $ref: '#/definitions/images_api.UpdateNameResponse'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/res.Response'
+      summary: 修改图片
       tags:
       - 图片管理
   /menu:
