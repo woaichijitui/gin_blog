@@ -231,6 +231,35 @@ const docTemplate = `{
                     }
                 }
             },
+            "put": {
+                "description": "修改图片",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "图片管理"
+                ],
+                "summary": "修改图片",
+                "parameters": [
+                    {
+                        "description": "要更新的图片id和name",
+                        "name": "cr",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/images_api.UpdateNameResponse"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "创建图片",
                 "produces": [
@@ -302,37 +331,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/images/{id}": {
-            "put": {
-                "description": "修改图片",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "图片管理"
-                ],
-                "summary": "修改图片",
-                "parameters": [
-                    {
-                        "description": "要更新的图片id和name",
-                        "name": "cr",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/images_api.UpdateNameResponse"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/res.Response"
-                        }
-                    }
-                }
-            }
-        },
         "/menu": {
             "get": {
                 "description": "菜单列表",
@@ -385,6 +383,44 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/menu_api.MenuRequest"
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/menu/{id}": {
+            "put": {
+                "description": "修改菜单api",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "菜单管理"
+                ],
+                "summary": "修改菜单",
+                "parameters": [
+                    {
+                        "description": "要更新的菜单参数",
+                        "name": "cr",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/menu_api.MenuRequest"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "要更新的菜单id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {

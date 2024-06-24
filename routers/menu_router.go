@@ -10,5 +10,6 @@ func MenuRouter(router *gin.RouterGroup) {
 	menuAPi := api.ApiGroupApp.MenuAPi
 	router.GET("/menu", menuAPi.MenuListView)
 	router.POST("/menu", menuAPi.MenuCreateView)
+	router.PUT("/menu/:id", menuAPi.MenuUpdateView)
 
 }

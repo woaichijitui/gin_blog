@@ -386,7 +386,6 @@ paths:
       summary: 创建图片
       tags:
       - 图片管理
-  /images/{id}:
     put:
       description: 修改图片
       parameters:
@@ -443,6 +442,31 @@ paths:
           schema:
             $ref: '#/definitions/res.Response'
       summary: 菜单创建
+      tags:
+      - 菜单管理
+  /menu/{id}:
+    put:
+      description: 修改菜单api
+      parameters:
+      - description: 要更新的菜单参数
+        in: body
+        name: cr
+        required: true
+        schema:
+          $ref: '#/definitions/menu_api.MenuRequest'
+      - description: 要更新的菜单id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/res.Response'
+      summary: 修改菜单
       tags:
       - 菜单管理
 swagger: "2.0"

@@ -15,7 +15,7 @@ type BannerModel struct {
 	MODEL
 	Path      string          `json:"path"`                        //图片路径
 	Hash      string          `json:"hash"`                        //图片的hash值，用于判断重复的图片
-	Name      string          `json:"name" gorm:"size:256"'`       //图片名称
+	Name      string          `json:"name" gorm:"size:256"`        //图片名称
 	ImageType ctype.ImageType `json:"image_type" gorm:"default:1"` //图片的类型，本地还是阿里云
 }
 

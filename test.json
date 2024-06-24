@@ -1,0 +1,21 @@
+{
+  "menu_title": "这是第二条菜单修改",
+  "menu_title_en": "这是第二条菜单修改",
+  "slogan": "这是第二条菜单修改",
+  "abstract": [
+    "这是第二条菜单修改"
+  ],
+  "abstract_time": 2,
+  "banner_time": 2,
+  "sort": 7,
+  "MenuImages": [
+    {
+      "id": 50,
+      "sort": 4
+    },
+    {
+      "id": 53,
+      "sort": 10
+    }
+  ]
+}

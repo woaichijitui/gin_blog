@@ -19,7 +19,7 @@ type UpdateNameResponse struct {
 // @summary 修改图片
 // @Description 修改图片
 // @Param cr body UpdateNameResponse true "要更新的图片id和name"
-// @Router /images/{id} [put]
+// @Router /images [put]
 // @Produce json
 // @success 200 {object} res.Response
 func (ImagesApi) ImagesUpdateView(c *gin.Context) {

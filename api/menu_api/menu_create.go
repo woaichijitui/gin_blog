@@ -10,19 +10,19 @@ import (
 
 // ImageSort 菜单图片的排序(每个菜单下面图片会安时间切换
 type ImageSort struct {
-	ImageID uint `json:"image_id"` //图片id
-	Sort    int  `json:"sort"`     //图片排序，例如2 其他图片可以是1 3
+	ImageID uint `json:"image_id" structs:"image_id"` //图片id
+	Sort    int  `json:"sort" structs:"sort"`         //图片排序，例如2 其他图片可以是1 3
 }
 
 type MenuRequest struct {
-	MenuTitle     string      `json:"menu_title" msg:"请完善菜单标题"`       //菜单标题
-	MenuTitleEn   string      `json:"menu_title_en" msg:"请完善菜单英文标题" ` //英文菜单标题
-	Slogan        string      `json:"slogan" `                        //广告
-	Abstract      ctype.Array `json:"abstract" `                      //简介
-	AbstractTime  int         `json:"abstract_time" `                 //简介的切换时间
-	BannerTime    int         `json:"banner_time" `                   //菜单图片的切换时间
-	Sort          int         `json:"sort"  msg:"请完善菜单排序"`            //菜单列表排序
-	ImageSortList []ImageSort `json:"image_sort_list"`                //具体图片的循序
+	MenuTitle     string      `json:"menu_title" msg:"请完善菜单标题" structs:"menu_title"`          //菜单标题
+	MenuTitleEn   string      `json:"menu_title_en" msg:"请完善菜单英文标题"  structs:"menu_title_en"` //英文菜单标题
+	Slogan        string      `json:"slogan" structs:"slogan" `                               //广告
+	Abstract      ctype.Array `json:"abstract"  structs:"abstract"`                           //简介
+	AbstractTime  int         `json:"abstract_time" structs:"abstract_time" `                 //简介的切换时间
+	BannerTime    int         `json:"banner_time"  structs:"banner_time"`                     //菜单图片的切换时间
+	Sort          int         `json:"sort"  msg:"请完善菜单排序" structs:"sort"`                     //菜单列表排序
+	ImageSortList []ImageSort `json:"image_sort_list" structs:"-"`                            //具体图片的循序
 }
 
 // MenuCreateView 菜单创建
