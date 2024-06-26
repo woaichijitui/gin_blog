@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 )
 
+// Md5 计算文件hash值
 func Md5(data []byte) string {
 	// 创建一个新的MD5哈希对象
 	hash := md5.New()

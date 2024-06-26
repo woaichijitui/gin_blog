@@ -3,3 +3,5 @@ log
 uploads
 tmp/main.exe
 .air.toml
+test.json
+tmp
