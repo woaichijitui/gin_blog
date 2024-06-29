@@ -30,6 +30,37 @@ definitions:
     x-enum-varnames:
     - Local
     - Aliyun
+  ctype.Role:
+    enum:
+    - 1
+    - 2
+    - 3
+    - 4
+    type: integer
+    x-enum-comments:
+      PermissionAdmin: 管理员
+      PermissionDisableUser: 被禁用的用户
+      PermissionUser: 普通登录用户
+      PermissionVisitor: 游客
+    x-enum-varnames:
+    - PermissionAdmin
+    - PermissionUser
+    - PermissionVisitor
+    - PermissionDisableUser
+  ctype.SignStatus:
+    enum:
+    - 1
+    - 2
+    - 3
+    type: integer
+    x-enum-comments:
+      SignEmail: 邮箱
+      SignGitee: gitee
+      SignQQ: QQ
+    x-enum-varnames:
+    - SignQQ
+    - SignGitee
+    - SignEmail
   images_api.BannerResponse:
     properties:
       id:
@@ -52,16 +83,6 @@ definitions:
     required:
     - id
     - name
-    type: object
-  login_api.LoginRequest:
-    properties:
-      password:
-        type: string
-      user_name:
-        type: string
-    required:
-    - password
-    - user_name
     type: object
   menu_api.ImageSort:
     properties:
@@ -196,6 +217,50 @@ definitions:
           type: integer
         type: array
     type: object
+  models.UserModel:
+    properties:
+      addr:
+        description: 地址
+        type: string
+      avatar:
+        description: 头像id
+        type: string
+      created_at:
+        description: 创建时间
+        type: string
+      email:
+        description: 邮箱
+        type: string
+      id:
+        description: 主键id
+        type: integer
+      ip:
+        description: ip地址
+        type: string
+      nick_name:
+        description: 昵称
+        type: string
+      password:
+        description: 密码
+        type: string
+      role:
+        allOf:
+        - $ref: '#/definitions/ctype.Role'
+        description: 用户权限
+      sign_status:
+        allOf:
+        - $ref: '#/definitions/ctype.SignStatus'
+        description: 用户登录方式
+      tel:
+        description: 手机
+        type: string
+      token:
+        description: 其他平台唯一id
+        type: string
+      user_name:
+        description: 用户名
+        type: string
+    type: object
   res.FileUploadResponse:
     properties:
       file_name:
@@ -214,6 +279,16 @@ definitions:
       data: {}
       msg:
         type: string
+    type: object
+  user_api.LoginRequest:
+    properties:
+      password:
+        type: string
+      user_name:
+        type: string
+    required:
+    - password
+    - user_name
     type: object
 host: 127.0.0.1:8080
 info:
@@ -308,7 +383,7 @@ paths:
         name: cr
         required: true
         schema:
-          $ref: '#/definitions/login_api.LoginRequest'
+          $ref: '#/definitions/user_api.LoginRequest'
       produces:
       - application/json
       responses:
@@ -499,4 +574,38 @@ paths:
       summary: 修改菜单
       tags:
       - 菜单管理
+  /users:
+    get:
+      description: 用户list
+      parameters:
+      - in: query
+        name: key
+        type: string
+      - description: 每页的页数
+        in: query
+        name: limit
+        type: integer
+      - in: query
+        name: page
+        type: integer
+      - in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/res.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.UserModel'
+                  type: array
+              type: object
+      summary: 用户list
+      tags:
+      - 用户管理
 swagger: "2.0"

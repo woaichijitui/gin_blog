@@ -12,7 +12,7 @@ const (
 )
 
 func (r Role) MarshalJSON() ([]byte, error) {
-	return json.Marshal(r.String)
+	return json.Marshal(r.String())
 
 }
 

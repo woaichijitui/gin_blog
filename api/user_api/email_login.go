@@ -1,4 +1,4 @@
-package login_api
+package user_api
 
 import (
 	"github.com/gin-gonic/gin"
@@ -21,7 +21,7 @@ type LoginRequest struct {
 // @Router /email_login [post]
 // @Produce json
 // @success 200 {object} res.Response
-func (l LoginApi) EmailLoginView(c *gin.Context) {
+func (l UserApi) EmailLoginView(c *gin.Context) {
 	//	接收参数
 	var cr LoginRequest
 	err := c.ShouldBindJSON(&cr)
