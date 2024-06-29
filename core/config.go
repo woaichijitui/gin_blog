@@ -11,7 +11,7 @@ import (
 )
 
 // 配置文件路径
-const ConfigFile = "settings.yaml"
+const ConfigFile = "../settings.yaml"
 
 func InitConfig() {
 

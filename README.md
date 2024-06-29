@@ -389,3 +389,14 @@ func (b *BannerModel) BeforeDelete(tx *gorm.DB) (err error) {
 
 `go install github.com/cosmtrek/air@latest`
 
+### 七、命令行创建用户
+
+### 八、用户管理
+
+#### jwt
+
+通过以下命令在 `Go` 程序里安装 `Go JWT` 依赖：
+
+```shell
+go get -u github.com/golang-jwt/jwt/v5
+```

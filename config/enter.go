@@ -9,6 +9,6 @@ type Config struct {
 	SiteInfo SiteInfo `yaml:"site_info"`
 	QQ       QQ       `yaml:"qq"`
 	Email    Email    `yaml:"email"`
-	jwt      Jwt      `yaml:"jwt"`
+	Jwt      Jwt      `yaml:"jwt"`
 	Aliyun   Aliyun   `yaml:"aliyun"`
 }
