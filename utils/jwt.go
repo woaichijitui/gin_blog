@@ -8,6 +8,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"gvb_server/config"
 	"gvb_server/global"
+	"gvb_server/models/ctype"
 	"time"
 )
 
@@ -47,10 +48,11 @@ func parsePriKeyBytes(buf []byte) (*rsa.PrivateKey, error) {
 }
 
 // GenerateTokenUsingRS256 生成token
-func GenerateTokenUsingRS256(userID uint, userName string) (string, error) {
+func GenerateTokenUsingRS256(userID uint, userName string, role ctype.Role) (string, error) {
 	claims := MyCustomClaims{
 		UserID:     int(userID),
 		UserName:   userName,
+		Role:       int(role),
 		GrantScope: global.Config.Jwt.GrantScope,
 		RegisteredClaims: jwt.RegisteredClaims{
 			Issuer:    global.Config.Jwt.Issuer,                                                                 //iss(Issuer)	发行者，标识 JWT 的发行者。

@@ -5,7 +5,7 @@ import (
 	"gvb_server/global"
 	"gvb_server/models"
 	"gvb_server/models/ctype"
-	utils "gvb_server/utils/pwd"
+	"gvb_server/utils"
 )
 
 // CreateUser 命令行创建账号

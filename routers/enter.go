@@ -30,5 +30,6 @@ func InitRouter() *gin.Engine {
 	ImagesRouter(apiGroup)
 	AdvertRouter(apiGroup)
 	MenuRouter(apiGroup)
+	LoginRouter(apiGroup)
 	return router
 }

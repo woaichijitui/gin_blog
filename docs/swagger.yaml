@@ -53,6 +53,16 @@ definitions:
     - id
     - name
     type: object
+  login_api.LoginRequest:
+    properties:
+      password:
+        type: string
+      user_name:
+        type: string
+    required:
+    - password
+    - user_name
+    type: object
   menu_api.ImageSort:
     properties:
       image_id:
@@ -289,6 +299,26 @@ paths:
       summary: 更新广告
       tags:
       - 广告管理
+  /email_login:
+    post:
+      description: 邮箱登录
+      parameters:
+      - description: '用户 密码 '
+        in: body
+        name: cr
+        required: true
+        schema:
+          $ref: '#/definitions/login_api.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/res.Response'
+      summary: 邮箱登录
+      tags:
+      - 用户管理
   /image_names:
     get:
       description: 图片名字列表

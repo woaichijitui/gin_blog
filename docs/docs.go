@@ -139,6 +139,37 @@ const docTemplate = `{
                 }
             }
         },
+        "/email_login": {
+            "post": {
+                "description": "邮箱登录",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户管理"
+                ],
+                "summary": "邮箱登录",
+                "parameters": [
+                    {
+                        "description": "用户 密码 ",
+                        "name": "cr",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/login_api.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/image_names": {
             "get": {
                 "description": "图片名字列表",
@@ -506,6 +537,21 @@ const docTemplate = `{
                 "name": {
                     "type": "string",
                     "maxLength": 256
+                }
+            }
+        },
+        "login_api.LoginRequest": {
+            "type": "object",
+            "required": [
+                "password",
+                "user_name"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "user_name": {
+                    "type": "string"
                 }
             }
         },

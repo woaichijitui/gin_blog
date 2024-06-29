@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gvb_server/config"
 	"gvb_server/core"
+	"gvb_server/models/ctype"
 	"gvb_server/utils"
 	"testing"
 )
@@ -11,14 +12,14 @@ import (
 func TestGenerateTokenUsingRS256(t *testing.T) {
 	core.InitConfig()
 
-	tokenStr, err := utils.GenerateTokenUsingRS256(1, "htt")
+	tokenStr, err := utils.GenerateTokenUsingRS256(1, "htt", ctype.PermissionUser)
 
 	fmt.Println(tokenStr, err)
 }
 func TestParseTokenRs256(t *testing.T) {
 	core.InitConfig()
 
-	tokenStr, err := utils.GenerateTokenUsingRS256(1, "htt")
+	tokenStr, err := utils.GenerateTokenUsingRS256(1, "htt", ctype.PermissionUser)
 
 	fmt.Println(tokenStr, err)
 
