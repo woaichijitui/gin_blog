@@ -287,6 +287,22 @@ definitions:
     - password
     - user_name
     type: object
+  user_api.UserUpdatePwdRequest:
+    properties:
+      new_password:
+        type: string
+      password:
+        type: string
+      re_password:
+        type: string
+      user_id:
+        type: integer
+    required:
+    - new_password
+    - password
+    - re_password
+    - user_id
+    type: object
   user_api.UserUpdateRoleRequest:
     properties:
       role:
@@ -604,6 +620,31 @@ paths:
           schema:
             $ref: '#/definitions/res.Response'
       summary: 用户注销
+      tags:
+      - 用户管理
+  /user_update_pwd:
+    put:
+      description: 用户密码修改
+      parameters:
+      - description: 用户密码修改
+        in: body
+        name: cr
+        required: true
+        schema:
+          $ref: '#/definitions/user_api.UserUpdatePwdRequest'
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/res.Response'
+      summary: 用户密码修改
       tags:
       - 用户管理
   /user_update_role:

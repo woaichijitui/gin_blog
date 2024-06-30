@@ -13,7 +13,7 @@ type UserUpdateRoleRequest struct {
 	UserID uint       `json:"user_id" binding:"required" msg:"请输入用户id"`
 }
 
-// UserUpdateRole 用户权限修改
+// UserUpdateRoleView 用户权限修改
 // @Tags 用户管理
 // @summary 用户权限修改
 // @Description 用户权限修改
@@ -21,7 +21,7 @@ type UserUpdateRoleRequest struct {
 // @Router /user_update_role [put]
 // @Produce json
 // @success 200 {object} res.Response
-func (UserApi) UserUpdateRole(c *gin.Context) {
+func (UserApi) UserUpdateRoleView(c *gin.Context) {
 
 	//	绑定参数
 	var cr UserUpdateRoleRequest

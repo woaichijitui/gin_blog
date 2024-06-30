@@ -487,6 +487,44 @@
                 }
             }
         },
+        "/user_update_pwd": {
+            "put": {
+                "description": "用户密码修改",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户管理"
+                ],
+                "summary": "用户密码修改",
+                "parameters": [
+                    {
+                        "description": "用户密码修改",
+                        "name": "cr",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user_api.UserUpdatePwdRequest"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/user_update_role": {
             "put": {
                 "description": "用户权限修改",
@@ -983,6 +1021,29 @@
                 },
                 "user_name": {
                     "type": "string"
+                }
+            }
+        },
+        "user_api.UserUpdatePwdRequest": {
+            "type": "object",
+            "required": [
+                "new_password",
+                "password",
+                "re_password",
+                "user_id"
+            ],
+            "properties": {
+                "new_password": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "re_password": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
                 }
             }
         },
