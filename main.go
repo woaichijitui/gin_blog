@@ -29,6 +29,14 @@ func main() {
 	global.DB = core.InitGorm()
 	global.Log.Infof(fmt.Sprintf("[%s] mysql连接成功！", global.Config.Mysql.DNS()))
 
+	//
+	global.Redis = core.ConnectRedisDB()
+	if global.Redis == nil {
+		global.Log.Error("redis连接失败")
+		return
+	}
+	global.Log.Infof(fmt.Sprintf("[%s] redis连接成功！", global.Config.Redis.Addr()))
+
 	//	命令行参数绑定
 	option := flag.Parse()
 	if flag.IsWebStop(option) {

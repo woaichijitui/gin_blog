@@ -7,7 +7,6 @@ import (
 	"gvb_server/models/ctype"
 	"gvb_server/models/res"
 	"gvb_server/service/service_com"
-	"gvb_server/utils"
 )
 
 // UserListView 用户list
@@ -19,30 +18,11 @@ import (
 // @Produce json
 // @success 200 {object} res.Response{data=[]models.UserModel}
 func (UserApi) UserListView(c *gin.Context) {
-	//判断是否是管理者
-	token := c.GetHeader("token")
-	//有无token
-	if token == "" {
-		res.FailWithMassage("无token", c)
-		return
-	}
-	//解析token
-	claims, err := utils.ParseTokenRs256(token)
-	if err != nil {
-		global.Log.Error(err)
-		res.FailWithMassage("token解析失败", c)
-		return
-	}
-	if ctype.Role(claims.Role) != ctype.PermissionAdmin {
-		//	若不是管理员
-		res.FailWithMassage("非管理员用户", c)
-		return
-	}
 
 	//	绑定参数
 	var page models.PageInfo
 	//绑定参数
-	err = c.ShouldBindQuery(&page)
+	err := c.ShouldBindQuery(&page)
 	if err != nil {
 		res.FailWithCode(res.ArgumentError, c)
 		return
