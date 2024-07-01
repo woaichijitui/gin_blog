@@ -43,7 +43,7 @@ func (UserApi) UserBindMailView(c *gin.Context) {
 		//随机验证码
 		code := utils.Code()
 		//	发送验证码
-		err = email.NewCode().SendEmail("1975611740@qq.com", fmt.Sprintf("你的验证码 %s", code))
+		err = email.NewCode().SendEmail(cr.Email, fmt.Sprintf("你的验证码 %s", code))
 		if err != nil {
 			global.Log.Error(err)
 			res.FailWithMassage("发送邮箱失败", c)
@@ -51,6 +51,7 @@ func (UserApi) UserBindMailView(c *gin.Context) {
 		}
 		//	将code存入session
 		session.Set("mail_code", code)
+		session.Set("email", cr.Email)
 		err = session.Save()
 		if err != nil {
 			global.Log.Error(err)
@@ -67,6 +68,10 @@ func (UserApi) UserBindMailView(c *gin.Context) {
 	}
 
 	//第一次邮箱 和 第二次邮箱一致性也要验证
+	if cr.Email != session.Get("email") {
+		res.OkWithMassage("邮箱不一致", c)
+		return
+	}
 
 	// 邮箱和密码更新
 	_claims, exists := c.Get("claims")

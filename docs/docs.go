@@ -677,6 +677,37 @@ const docTemplate = `{
                 }
             }
         },
+        "/user_register": {
+            "post": {
+                "description": "邮箱或者用户名注册",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户管理"
+                ],
+                "summary": "邮箱或者用户名注册",
+                "parameters": [
+                    {
+                        "description": "注册信息 ",
+                        "name": "cr",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user_api.RegisterRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/res.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/user_update_pwd": {
             "put": {
                 "description": "用户密码修改",
@@ -1311,6 +1342,36 @@ const docTemplate = `{
             ],
             "properties": {
                 "password": {
+                    "type": "string"
+                },
+                "user_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "user_api.RegisterRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "nick_name",
+                "password",
+                "re_password",
+                "user_name"
+            ],
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "nick_name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "re_password": {
                     "type": "string"
                 },
                 "user_name": {

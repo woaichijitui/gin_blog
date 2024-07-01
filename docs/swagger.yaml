@@ -357,6 +357,27 @@ definitions:
     - password
     - user_name
     type: object
+  user_api.RegisterRequest:
+    properties:
+      code:
+        type: string
+      email:
+        type: string
+      nick_name:
+        type: string
+      password:
+        type: string
+      re_password:
+        type: string
+      user_name:
+        type: string
+    required:
+    - email
+    - nick_name
+    - password
+    - re_password
+    - user_name
+    type: object
   user_api.UserUpdatePwdRequest:
     properties:
       new_password:
@@ -804,6 +825,26 @@ paths:
           schema:
             $ref: '#/definitions/res.Response'
       summary: 用户注销
+      tags:
+      - 用户管理
+  /user_register:
+    post:
+      description: 邮箱或者用户名注册
+      parameters:
+      - description: '注册信息 '
+        in: body
+        name: cr
+        required: true
+        schema:
+          $ref: '#/definitions/user_api.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/res.Response'
+      summary: 邮箱或者用户名注册
       tags:
       - 用户管理
   /user_update_pwd:
