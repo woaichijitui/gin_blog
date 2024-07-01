@@ -29,6 +29,14 @@ func JwtAuth() gin.HandlerFunc {
 			return
 		}
 
+		//注销的用户
+		logout := service.Service.RedisService.CheckLogout(token)
+		if logout {
+			res.FailWithMassage("用户已注销", c)
+			c.Abort()
+			return
+		}
+
 		c.Set("claims", claims)
 
 	}
@@ -65,6 +73,7 @@ func JwtAdmin() gin.HandlerFunc {
 		if ctype.Role(claims.Role) != ctype.PermissionAdmin {
 			//	若不是管理员
 			res.FailWithMassage("非管理员用户", c)
+			c.Abort()
 			return
 		}
 

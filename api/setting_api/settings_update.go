@@ -9,6 +9,13 @@ import (
 )
 
 // SettingsInfoUpdateView	修改配置文件信息api
+// @Tags 系统设置
+// @summary 修改配置文件信息api
+// @Description 修改配置文件信息api
+// @Param siteInfo body config.SiteInfo true "要更新系统信息参数"
+// @Router /settings [put]
+// @Produce json
+// @success 200 {object} res.Response
 func (SettingsApi) SettingsInfoUpdateView(c *gin.Context) {
 	//绑定json参数
 	var siteInfo config.SiteInfo

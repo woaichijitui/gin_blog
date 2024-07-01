@@ -8,7 +8,14 @@ import (
 	"gvb_server/models/res"
 )
 
-// SettingsInfoUpdateView	修改配置文件信息api
+// SettingsEmailInfoUpdateView	修改邮箱信息api
+// @Tags 系统设置
+// @summary 修改邮箱信息api
+// @Description 修改邮箱信息api
+// @Param email body config.Email true "要更新邮箱信息参数"
+// @Router /settings_email [put]
+// @Produce json
+// @success 200 {object} res.Response
 func (SettingsApi) SettingsEmailInfoUpdateView(c *gin.Context) {
 	//绑定json参数
 	var email config.Email
