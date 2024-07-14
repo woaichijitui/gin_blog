@@ -46,6 +46,7 @@ func main() {
 	}
 
 	//	启动gin
+
 	addr := global.Config.System.Addr()
 	router := routers.InitRouter()
 
