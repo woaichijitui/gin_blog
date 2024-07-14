@@ -410,3 +410,44 @@ go get -u github.com/golang-jwt/jwt/v5
 
 
 #### 用户权限修改
+
+
+
+#### 用户注销
+
+##### redis
+
+
+
+#### 用户删除
+
+
+
+#### 用户绑定邮箱
+
+
+
+##### gin sesion 
+
+```
+import (
+        // 导入session包
+	"github.com/gin-contrib/sessions"
+       // 导入session存储引擎
+	"github.com/gin-contrib/sessions/cookie"
+        // 导入gin框架包
+	"github.com/gin-gonic/gin"
+)
+```
+
+```
+// 创建基于cookie的存储引擎，secret 参数是用于加密的密钥，可以随便填写
+	store := cookie.NewStore(secret)
+	// 设置session中间件，参数mysession，指的是session的名字，也是cookie的名字
+	// store是前面创建的存储引擎
+	router.Use(sessions.Sessions("mysession", store))
+```
+
+
+
+#### 用户注册

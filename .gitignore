@@ -2,5 +2,5 @@
 log
 uploads
 .air.toml
-test.json
 tmp
+docs

@@ -8,15 +8,16 @@ import (
 	"io/fs"
 	"io/ioutil"
 	"log"
+	"os"
 )
 
 // 配置文件路径
-const ConfigFile = "settings.yaml"
+const ConfigFile = "./settings.yaml"
 
 func InitConfig() {
 
 	//ioutil.ReadFile 将文件读取到[]byte
-	configFile, err := ioutil.ReadFile(ConfigFile)
+	configFile, err := os.ReadFile(ConfigFile)
 	if err != nil {
 		panic(fmt.Sprintf("配置文件读取错误：%v", err))
 	}
